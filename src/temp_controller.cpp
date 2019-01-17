@@ -20,13 +20,13 @@ public:
     if (heating)
     {
       float temp = msg->data;
-      if (temp == 0)
+      if (temp < 10)
       {
         temp = 0.1;
       }
       ROS_INFO("Temp (C): [%f]", temp);
       geometry_msgs::Twist turn_msg;
-      turn_msg.angular.x = M_PI - (M_PI / (40/temp));
+      turn_msg.angular.x = M_PI / (40/temp);
       cmd_pub_.publish(turn_msg);
     }
     else
