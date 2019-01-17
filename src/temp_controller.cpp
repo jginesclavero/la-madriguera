@@ -21,9 +21,12 @@ public:
     {
       float temp = msg->data;
       if (temp < 10)
-      {
         temp = 0.1;
-      }
+      else if (temp > 17 && temp < 20)
+        temp = temp + 2;
+      else if (temp > 20)
+        temp = temp + 4;
+        
       ROS_INFO("Temp (C): [%f]", temp);
       geometry_msgs::Twist turn_msg;
       turn_msg.angular.x = M_PI / (40/temp);
