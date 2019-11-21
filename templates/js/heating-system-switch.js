@@ -1,6 +1,6 @@
 
 function check_switch_status(){
-  $.getJSON('url/heating-system/getStatus', function(data) {
+  $.getJSON('https://la-madriguera-iot.herokuapp.com/heating-system/getStatus', function(data) {
     document.getElementById("switch").checked = data[0].status;
   });
 }
