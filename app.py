@@ -46,7 +46,7 @@ def set_status():
    
 @app.route('/heating-system')
 def heating_system_index():
-  return render_template("getdata.html")
+  return render_template("heating-system-set-status.html")
 
 # A welcome message to test our server
 @app.route('/')
