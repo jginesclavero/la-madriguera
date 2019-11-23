@@ -16,7 +16,7 @@
       <div class="custom-control custom-switch">
         </br>
         </br>
-        <input type="checkbox" class="custom-control-input" id="switch">
+        <input type="checkbox" class="custom-control-input" id="switch" onchange="switch_button(this)">
         <label class="custom-control-label" for="switch">Prende la caldera!</label>
 
       </div>           
@@ -38,9 +38,18 @@
       });
       document.getElementById("switch").checked = false;
     }
-
+      
+    function switch_button(element){
+      var status = 0;
+      if (element.checked){
+        status = 1;
+      }
+      window.location = 'https://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=' + status;
+    }
     window.onload = check_switch_status();
   </script>
+
+
 </body>
 
 </html>
