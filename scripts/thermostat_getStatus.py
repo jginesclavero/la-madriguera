@@ -7,7 +7,7 @@ import requests
 def update_heating_status():
   try:
     status = False
-    url = 'la-madriguera-iot.herokuapp.com/heating-system/getStatus'
+    url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
     resp = requests.get(url=url)
     data = resp.json()
     if data.status == 1:
