@@ -26,5 +26,5 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
       update_heating_status()
       rate.sleep()
-    except rospy.ROSInterruptException:
-        pass
+  except rospy.ROSInterruptException:
+    pass
