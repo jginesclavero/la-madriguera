@@ -10,7 +10,7 @@ def update_heating_status():
     url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
     resp = requests.get(url=url)
     data = resp.json()
-    if data.status == 1:
+    if data[0]['status'] == 1:
       status = True
     power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
     resp = power_on_srv(status)
@@ -22,7 +22,7 @@ if __name__ == '__main__':
   try:
     rospy.init_node('thermostat_getStatus', anonymous=False)
     rate = rospy.Rate(0.2)
-    rospy.wait_for_service('/thermostat/power_on')
+    #rospy.wait_for_service('/thermostat/power_on')
     while not rospy.is_shutdown():
       update_heating_status()
       rate.sleep()
