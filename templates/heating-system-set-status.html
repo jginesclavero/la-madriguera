@@ -44,8 +44,10 @@
       if (element.checked){
         status = 1;
       }
-      window.location = 'https://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=' + status;
+      var url = "https://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=" + status;
+      $.get(url);
     }
+    
     window.onload = check_switch_status();
   </script>
 
