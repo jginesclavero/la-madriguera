@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import wiringpi
-import time                #Importamos time para poder usar time.sleep
 import rospy
 import math
 from std_srvs.srv import SetBool,SetBoolResponse
@@ -23,5 +22,5 @@ if __name__ == '__main__':
     rospy.init_node('thermostat_driver', anonymous=False)
     s = rospy.Service('/thermostat/power_on', SetBool, callback)
     rospy.spin()
-  except rospy.ROSInterruptException:         #Si el usuario pulsa CONTROL+C entonces...
+  except rospy.ROSInterruptException:
     pass
