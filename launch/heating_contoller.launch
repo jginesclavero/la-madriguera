@@ -1,4 +1,4 @@
 <launch>
-  <node name="thermostat_driver" pkg="la_madriguera" type="thermostat_driver.py" respawn="false" output="screen"/>
-  <node name="temp_controller" pkg="la_madriguera" type="temp_controller_node" respawn="false" output="screen"/>
+  <node name="heating_driver" pkg="la_madriguera" type="heating_driver.py" respawn="false" output="screen"/>
+  <node name="heating_controller" pkg="la_madriguera" type="heating_controller.py" respawn="false" output="screen"/>
 </launch>
