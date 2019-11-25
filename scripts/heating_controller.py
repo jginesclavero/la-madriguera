@@ -25,8 +25,8 @@ def update_heating_status():
     data = resp.json()
     if data[0]['status'] == 1:
       status = True
-    #power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
-    #resp = power_on_srv(status)
+    power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
+    resp = power_on_srv(status)
     return
   except rospy.ServiceException, e:
     print "Service call failed: %s"%e
