@@ -3,7 +3,6 @@ import wiringpi
 import rospy
 import math
 from std_srvs.srv import SetBool,SetBoolResponse
-from geometry_msgs.msg import Twist
 
 def callback(req):
   io = wiringpi.GPIO(wiringpi.GPIO.WPI_MODE_PINS)
