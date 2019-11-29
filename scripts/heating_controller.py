@@ -30,7 +30,7 @@ class HeatingController:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
       data = resp.json()
-      if data[0]['status'] == 1 and self.temperature_ < 19.0:
+      if data[0]['status'] == 1 and self.temperature_ < 18.0:
         status = True
       power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
       resp = power_on_srv(status)
