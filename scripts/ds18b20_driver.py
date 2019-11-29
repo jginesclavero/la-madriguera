@@ -24,7 +24,7 @@ class Ds18b20Node:
       temperaturedata = secondline.split(" ")[9]
       self.temperature_ = float(temperaturedata[2:])
       self.temperature_ = self.temperature_ / 1000
-      self.pub_(self.temperature_)
+      self.pub_.publish(self.temperature_)
       firstline = text
       ccrrcc = firstline.split(" ")[11]
       ccrrcc = (ccrrcc[:3]) #take only first 3 characters
