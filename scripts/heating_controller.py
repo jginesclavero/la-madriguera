@@ -35,7 +35,7 @@ class HeatingController:
       power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
       resp = power_on_srv(status)
       return
-    except rospy.ServiceException,requests.exceptions.ConnectionError, e:
+    except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
 if __name__ == '__main__':
