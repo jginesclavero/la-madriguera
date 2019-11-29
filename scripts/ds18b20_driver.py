@@ -5,13 +5,12 @@ import rospy
 from std_msgs.msg import Float32
 
 class Ds18b20Node:
-	def __init__(self):
+  def __init__(self):
     try:
-    self.serialnum_ = (sys.argv[1])
+      self.serialnum_ = (sys.argv[1])
     except:
       print ("Usage: 'ds18b20_driver.py {serialnumber of the ds18b20 -- ls /sys/bus/w1/devices}'")
       sys.exit()
-    
     self.pub_ = rospy.Publisher('/ds18b20/temperature', Float32, queue_size=1)
     self.temperature_ = 0.0
     
@@ -43,5 +42,5 @@ if __name__ == '__main__':
     while not rospy.is_shutdown():
       driver.getTemp()
       rate.sleep()
-    except rospy.ROSInterruptException:
-      pass
+  except rospy.ROSInterruptException:
+    pass
