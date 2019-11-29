@@ -8,11 +8,11 @@ def callback(req):
   io = wiringpi.GPIO(wiringpi.GPIO.WPI_MODE_PINS)
   # establecemos el modo de operacion del pin, en este caso es de salida
   # hay que utilizar la nomenclatura de Wiring pi, es MUY IMPORTANTE
-  io.pinMode(7, io.OUTPUT)
+  io.pinMode(14, io.OUTPUT)
   if req.data:
-    io.digitalWrite(7, io.HIGH)
+    io.digitalWrite(14, io.HIGH)
   else:
-    io.digitalWrite(7, io.LOW)
+    io.digitalWrite(14, io.LOW)
 
   return SetBoolResponse()
 
