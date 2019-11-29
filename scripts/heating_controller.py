@@ -12,18 +12,18 @@ class HeatingController:
     self.temperature_ = 0.0
     self.sleeping_ = False
 
-	def callback(self, data):
+  def callback(self, data):
     self.temperature_ = data.data
 
   def sleeping_mode(self):
-  if datetime.datetime.now().time().hour == 23 and not self.sleeping_:
-    url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
-    requests.get(url=url)
-    self.sleeping_ = True
-  else:
-    self.sleeping_ = False
+    if datetime.datetime.now().time().hour == 23 and not self.sleeping_:
+      url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
+      requests.get(url=url)
+      self.sleeping_ = True
+    else:
+      self.sleeping_ = False
 
-  def update_heating_status():
+  def update_heating_status(self):
     self.sleeping_mode()
     try:
       status = False

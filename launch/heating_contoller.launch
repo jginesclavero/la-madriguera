@@ -1,5 +1,5 @@
 <launch>
   <node name="heating_driver" pkg="la_madriguera" type="heating_driver.py" respawn="false" output="screen"/>
   <node name="heating_controller" pkg="la_madriguera" type="heating_controller.py" respawn="false" output="screen"/>
-  <node name="ds18b20_node" pkg="la_madriguera" type="ds18b20_node.py" arg="28-01a4d6070002" respawn="false"/>
+  <node name="ds18b20_node" pkg="la_madriguera" type="ds18b20_node.py" args="28-01a4d6070002" respawn="false"/>
 </launch>
