@@ -13,16 +13,15 @@ class Ds18b20Node:
       sys.exit()
     self.pub_ = rospy.Publisher('/ds18b20/temperature', Float32, queue_size=1)
     self.temperature_ = 0.0
-    
 
   def getTemp(self):
     for i in range(5):
-      filename="/sys/bus/w1/devices/"+_serialnum+"/w1_slave"
-      tfile= open(filename)
+      filename = "/sys/bus/w1/devices/" + self.serialnum_ + "/w1_slave"
+      tfile = open(filename)
       text = tfile.read()
       tfile.close()
       secondline = text.split("\n")[1]
-      temperaturedata= secondline.split(" ")[9]
+      temperaturedata = secondline.split(" ")[9]
       self.temperature_ = float(temperaturedata[2:])
       self.temperature_ = self.temperature_ / 1000
       self.pub_(self.temperature_)
@@ -36,7 +35,7 @@ class Ds18b20Node:
 
 if __name__ == '__main__':
   rospy.init_node('ds18b20_node', anonymous=True)
-  rate = rospy.Rate(1) # 10hz
+  rate = rospy.Rate(1)
   try:
     driver = Ds18b20Node()
     while not rospy.is_shutdown():
