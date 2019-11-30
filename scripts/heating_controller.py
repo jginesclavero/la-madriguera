@@ -41,7 +41,7 @@ class HeatingController:
     except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
-  def update_heating_status(status, self):
+  def update_heating_status(self, status):
     power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
     resp = power_on_srv(status)
 
