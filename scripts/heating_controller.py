@@ -34,7 +34,10 @@ class HeatingController:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
       data = resp.json()
-      return data[0]['status']
+      if data[0]['status'] == 1:
+        return True
+      else:
+        return False
     except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
@@ -60,7 +63,7 @@ class HeatingController:
         self.state_ = States.PSYDUCK
     else:
       self.update_heating_status(general_status)
-      
+
 if __name__ == '__main__':
   try:
     rospy.init_node('thermostat_getStatus', anonymous=False)
