@@ -5,46 +5,69 @@ import rospy
 from std_srvs.srv import SetBool,SetBoolRequest
 from std_msgs.msg import Float32
 import requests
+import enum
+
+class States(enum.Enum):
+   ARTICUNO = 1
+   PSYDUCK = 2
+   CHARMANDER = 3
 
 class HeatingController:
   def __init__(self):
     rospy.Subscriber('/ds18b20/temperature', Float32, self.callback)
     self.temperature_ = 0.0
-    self.sleeping_ = False
+    self.target_temp_ = 18.0
+    self.min_temp_ = self.target_temp_ - 0.5
+    self.max_temp_ = self.target_temp_ + 0.5
+    self.state_ = States.PSYDUCK
 
   def callback(self, data):
     self.temperature_ = data.data
 
   def sleeping_mode(self):
-    if datetime.datetime.now().time().hour == 23 and not self.sleeping_:
+    if datetime.datetime.now().time().hour == 23 and datetime.datetime.now().time().minute == 00:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
       requests.get(url=url)
-      self.sleeping_ = True
-    else:
-      self.sleeping_ = False
 
-  def update_heating_status(self):
-    self.sleeping_mode()
+  def check_web_switch(self):
     try:
-      status = False
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
       data = resp.json()
-      if data[0]['status'] == 1 and self.temperature_ < 18.0:
-        status = True
-      power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
-      resp = power_on_srv(status)
-      return
+      return data[0]['status']
     except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
+  def update_heating_status(status, self):
+    power_on_srv = rospy.ServiceProxy('/thermostat/power_on', SetBool)
+    resp = power_on_srv(status)
+
+  def step(self):
+    self.sleeping_mode()
+    general_status = self.check_web_switch()
+    if general_status:
+      if self.state_ == States.ARTICUNO:
+        self.update_heating_status(True)
+        if self.temperature_ >= self.min_temp_:
+          self.state_ = States.PSYDUCK
+      elif self.state_ == States.PSYDUCK:
+        if self.temperature_ < self.min_temp_:
+          self.state_ = States.ARTICUNO
+        elif self.temperature_ > self.max_temp_:
+          self.state_ = States.CHARMANDER
+      else:
+        self.update_heating_status(False)
+        self.state_ = States.PSYDUCK
+    else:
+      self.update_heating_status(general_status)
+      
 if __name__ == '__main__':
   try:
     rospy.init_node('thermostat_getStatus', anonymous=False)
     rate = rospy.Rate(0.2)
     controller = HeatingController()
     while not rospy.is_shutdown():
-      controller.update_heating_status()
+      controller.step()
       rate.sleep()
   except rospy.ROSInterruptException:
     pass
