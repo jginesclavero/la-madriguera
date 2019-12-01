@@ -28,7 +28,7 @@ class HeatingController:
     self.max_temp_ = self.target_temp_ + 0.5
 
   def sleeping_mode(self):
-    if datetime.datetime.now().time().hour == 23 and datetime.datetime.now().time().minute == 00:
+    if datetime.datetime.now().time().hour == 21 and datetime.datetime.now().time().minute == 30:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
       requests.get(url=url)
 
