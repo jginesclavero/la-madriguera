@@ -29,15 +29,18 @@ class HeatingController:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
       requests.get(url=url)
 
-  def check_web_switch(self):
+  def check_status(self):
     try:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
       data = resp.json()
+      temp = data[0]['temp']
+      print "Temp ------------"
+      print temp
       if data[0]['status'] == 1:
-        return True
+        return True, temp
       else:
-        return False
+        return False, temp
     except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
@@ -47,7 +50,7 @@ class HeatingController:
 
   def step(self):
     self.sleeping_mode()
-    general_status = self.check_web_switch()
+    general_status, self.target_temp_ = self.check_status()
     if general_status:
       if self.state_ == States.ARTICUNO:
         self.update_heating_status(True)
