@@ -16,13 +16,16 @@ class HeatingController:
   def __init__(self):
     rospy.Subscriber('/ds18b20/temperature', Float32, self.callback)
     self.temperature_ = 0.0
-    self.target_temp_ = 18.0
-    self.min_temp_ = self.target_temp_ - 0.5
-    self.max_temp_ = self.target_temp_ + 0.5
+    self.update_target_temp(18)
     self.state_ = States.PSYDUCK
 
   def callback(self, data):
     self.temperature_ = data.data
+
+  def update_target_temp(self, temp):
+    self.target_temp_ = temp
+    self.min_temp_ = self.target_temp_ - 0.5
+    self.max_temp_ = self.target_temp_ + 0.5
 
   def sleeping_mode(self):
     if datetime.datetime.now().time().hour == 23 and datetime.datetime.now().time().minute == 00:
@@ -34,13 +37,11 @@ class HeatingController:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
       data = resp.json()
-      temp = data[0]['temp']
-      print "Temp ------------"
-      print temp
+      self.update_target_temp(data[0]['temp'])
       if data[0]['status'] == 1:
-        return True, temp
+        return True
       else:
-        return False, temp
+        return False
     except requests.exceptions.ConnectionError, e:
       print "Service call failed: %s"%e
 
@@ -50,7 +51,7 @@ class HeatingController:
 
   def step(self):
     self.sleeping_mode()
-    general_status, self.target_temp_ = self.check_status()
+    general_status = self.check_status()
     if general_status:
       if self.state_ == States.ARTICUNO:
         self.update_heating_status(True)
