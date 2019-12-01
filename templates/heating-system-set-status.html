@@ -19,6 +19,9 @@
         <input type="checkbox" class="custom-control-input" id="switch" onchange="switch_button(this)">
         <label class="custom-control-label" for="switch">Prende la caldera!</label>
 
+        <input type="number" id="temp" onchange="temp_button(this)">
+        <label class="custom-control-label" for="temp"> ¿Cuanto calorsito quieres?</label>
+
       </div>           
     </div>
   </div>
@@ -32,11 +35,13 @@
 
   <script>
   
-    function check_switch_status(){
+    function check_status(){
       $.getJSON('https://la-madriguera-iot.herokuapp.com/heating-system/getStatus', function(data) {
         document.getElementById("switch").checked = data[0].status;
+        document.getElementById("temp").value = data[0].temp;
       });
       document.getElementById("switch").checked = false;
+      document.getElementById("temp").value = 17;
     }
       
     function switch_button(element){
@@ -48,7 +53,13 @@
       $.get(url);
     }
     
-    window.onload = check_switch_status();
+    function temp_button(element){
+      var url = "https://la-madriguera-iot.herokuapp.com/heating-system/setTemp?temp=" + element.value;
+      $.get(url);
+    }
+    
+    window.onload = check_status();
+
   </script>
 
 
