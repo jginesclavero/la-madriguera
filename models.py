@@ -20,6 +20,6 @@ class SystemStatus(db.Model):
         return {
             'id': self.id, 
             'name': self.name,
-            'status': self.status
+            'status': self.status,
             'temp': self.temp
         }
