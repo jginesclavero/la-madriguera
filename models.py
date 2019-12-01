@@ -6,11 +6,13 @@ class SystemStatus(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String())
     status = db.Column(db.Integer)
+    temp = db.Column(db.Integer)
     
-    def __init__(self, id, name, status):
+    def __init__(self, id, name, status, temp):
         self.name = name
         self.status = status
         self.id = id
+        self.temp = temp
     def __repr__(self):
         return '<id {}>'.format(self.id)
     
@@ -19,4 +21,5 @@ class SystemStatus(db.Model):
             'id': self.id, 
             'name': self.name,
             'status': self.status
+            'temp': self.temp
         }

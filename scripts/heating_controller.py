@@ -56,7 +56,7 @@ class HeatingController:
       elif self.state_ == States.PSYDUCK:
         if self.temperature_ < self.min_temp_:
           self.state_ = States.ARTICUNO
-        elif self.temperature_ > self.max_temp_:
+        elif self.temperature_ >= self.max_temp_:
           self.state_ = States.CHARMANDER
       else:
         self.update_heating_status(False)

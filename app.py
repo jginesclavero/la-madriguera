@@ -20,22 +20,45 @@ def respond():
   except Exception as e:
 	  return(str(e))
 
-@app.route("/heating-system/setStatus")
-def set_status():
-  #name = request.args.get('name')
+@app.route("/heating-system/setTemp")
+def set_temp():
   name = "heating system"
-  status = request.args.get('status')
+  temp = request.args.get('temp')
   user_query = SystemStatus.query.filter_by(name='heating system')
-  if  user_query.count() > 0:
-    user_query.update({SystemStatus.status:status}, synchronize_session = False)
+  if user_query.count() > 0:
+    user_query.update({SystemStatus.temp:temp}, synchronize_session = False)
     db.session.commit()
-    return "System exists... Updating"
+    return "System exists... Updating temp"
   else:
     try:
       system_status = SystemStatus(
         id = 1,
         name = name,
-        status = status
+        status = True,
+        temp = temp
+      )
+      db.session.add(system_status)
+      db.session.commit()
+      return "System temp added. system id={}".format(system_status.id)
+    except Exception as e:
+	    return(str(e))    
+
+@app.route("/heating-system/setStatus")
+def set_status():
+  name = "heating system"
+  status = request.args.get('status')
+  user_query = SystemStatus.query.filter_by(name='heating system')
+  if user_query.count() > 0:
+    user_query.update({SystemStatus.status:status}, synchronize_session = False)
+    db.session.commit()
+    return "System exists... Updating status"
+  else:
+    try:
+      system_status = SystemStatus(
+        id = 1,
+        name = name,
+        status = status,
+        temp = 18.0
       )
       db.session.add(system_status)
       db.session.commit()
