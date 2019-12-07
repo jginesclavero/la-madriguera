@@ -86,12 +86,9 @@ def respond():
 @app.route("/heating-system/setTemp")
 def set_temp():
   name = "heating system"
-
   temp = request.args.get('temp')
-  username = request.args.get('username')
-  password = request.args.get('password')
-
-  if not check_login(username, password): 
+  
+  if not current_user.is_authenticated:
     return "Loggin required"
 
   user_query = SystemStatus.query.filter_by(name='heating system')
@@ -118,10 +115,42 @@ def set_status():
   name = "heating system"
   status = request.args.get('status')
 
+  if not current_user.is_authenticated:
+    return "Loggin required"
+
+  user_query = SystemStatus.query.filter_by(name='heating system')
+  if user_query.count() > 0:
+    user_query.update({SystemStatus.status:status}, synchronize_session = False)
+    db.session.commit()
+    return "System exists... Updating status"
+  else:
+    try:
+      system_status = SystemStatus(
+        id = 1,
+        name = name,
+        status = status,
+        temp = 18.0
+      )
+      db.session.add(system_status)
+      db.session.commit()
+      return "System status added. system id={}".format(system_status.id)
+    except Exception as e:
+	    return(str(e))
+
+  
+@app.route("/heating-system/setStatusWithUser")
+def set_status_with_user():
+  status = request.args.get('status')
   username = request.args.get('username')
   password = request.args.get('password')
 
   if not check_login(username, password): 
+    return "Loggin required"
+
+  name = "heating system"
+  status = request.args.get('status')
+
+  if not current_user.is_authenticated:
     return "Loggin required"
 
   user_query = SystemStatus.query.filter_by(name='heating system')
