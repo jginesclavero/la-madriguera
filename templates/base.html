@@ -9,6 +9,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>La Madriguera IOT</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css" />
+  <script src="https://code.jquery.com/jquery-3.2.0.slim.min.js"></script>
+  <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="static/toggle.css">
+  <link rel="stylesheet" type="text/css" href="static/base.css">
+       
 </head>
     
 
@@ -57,31 +63,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js " integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy "
     crossorigin="anonymous "></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-  <script>
-    function check_status(){
-      $.getJSON('https://la-madriguera-iot.herokuapp.com/heating-system/getStatus', function(data) {
-        document.getElementById("switch").checked = data[0].status;
-        document.getElementById("temp").value = data[0].temp;
-      });
-      document.getElementById("switch").checked = false;
-      document.getElementById("temp").value = 17;
-    }
-      
-    function switch_button(element){
-      var status = 0;
-      if (element.checked){
-        status = 1;
-      }
-      var url = "https://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=" + status;
-      $.get(url);
-    }
-    
-    function temp_button(element){
-      var url = "https://la-madriguera-iot.herokuapp.com/heating-system/setTemp?temp=" + element.value;
-      $.get(url);
-    }
-    window.onload = check_status();
-  </script>
+  <script type = "text/javascript" src="static/heating-system.js"></script>
 </body>
 </html>

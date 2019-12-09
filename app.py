@@ -48,7 +48,7 @@ def check_login(username, password):
 
 @app.route('/login', methods=['POST'])
 def login_post():
-  username = request.form.get('username')
+  username = str(request.form.get('username')).lower()
   password = request.form.get('password')
   remember = True if request.form.get('remember') else False
 
@@ -149,9 +149,6 @@ def set_status_with_user():
 
   name = "heating system"
   status = request.args.get('status')
-
-  if not current_user.is_authenticated:
-    return "Loggin required"
 
   user_query = SystemStatus.query.filter_by(name='heating system')
   if user_query.count() > 0:

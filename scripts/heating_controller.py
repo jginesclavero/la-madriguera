@@ -18,6 +18,8 @@ class HeatingController:
     self.temperature_ = 0.0
     self.update_target_temp(18)
     self.state_ = States.PSYDUCK
+    self.user = "USERNAME"
+    self.password = "PASSWORD"
 
   def callback(self, data):
     self.temperature_ = data.data
@@ -29,7 +31,7 @@ class HeatingController:
 
   def sleeping_mode(self):
     if datetime.datetime.now().time().hour == 21 and datetime.datetime.now().time().minute == 30:
-      url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatus?status=0'
+      url = 'http://la-madriguera-iot.herokuapp.com/heating-system/setStatusWithUser?status=0&username=' + self.user + '&password=' + self.password
       requests.get(url=url)
 
   def check_status(self):

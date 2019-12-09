@@ -1,0 +1,15 @@
+.hero.is-primary .title{
+  color: black;
+}
+.hero.is-primary .subtitle{
+  color: black;
+}
+.hero.is-primary{
+  background-color:#e4e4e4;
+  color: black;
+}
+
+.heating-label{
+  font-size: 2em;
+  font-weight: bold;
+}

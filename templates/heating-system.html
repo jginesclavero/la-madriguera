@@ -5,15 +5,20 @@
       <div class="custom-control custom-switch">
         </br>
         </br>
-        <h1 class="title">
-          <label class="custom-control-label" for="switch">Prende la caldera!</label>
-          <input type="checkbox" class="custom-control-input" id="switch" onchange="switch_button(this)">
+          <label class="heating-label" for="switch">Prende la caldera!</label>
+          <div class="input toggle-onoff" unselectable="on" >
+            <input type="hidden" name="onoff" id="switch" value="0">
+            <i class="fa fa-4x" aria-hidden="true"></i>
+            <span></span>
+          </div>
           </br></br></br>
-          <label class="custom-control-label" for="temp"> ¿Cuanto calorsito quieres?</label>
+          <h1 class="title"></h1>
+          <label class="heating-label" for="temp"> ¿Cuanto calorsito quieres?</label>
           </br>
           <input type="number" id="temp" onchange="temp_button(this)">
-        </h1>
+          </h1>
       </div>           
     </div>
   </div>
+
 {% endblock %}
