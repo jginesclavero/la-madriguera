@@ -13,21 +13,21 @@ function temp_button(element){
 }
 
 function toggleonfoff_init() {
-  document.getElementById("switch").value = 0;
-  document.getElementById("temp").value = 17;
-
-  $.getJSON('https://la-madriguera-iot.herokuapp.com/heating-system/getStatus', function(data) {
-    document.getElementById("switch").value = data[0].status;
-    document.getElementById("temp").value = data[0].temp;
-  })
-
-  if (document.getElementById("switch").value == 1) {
+  //document.getElementById("switch").value = 0;
+  //document.getElementById("temp").value = 17;
+//
+  //$.getJSON('https://la-madriguera-iot.herokuapp.com/heating-system/getStatus', function(data) {
+  //  document.getElementById("switch").value = data[0].status;
+  //  document.getElementById("temp").value = data[0].temp;
+  //})
+//
+  //if (document.getElementById("switch").value == 1) {
     $("div.input.toggle-onoff input:hidden").parent("div").children("i.fa").removeClass("fa-toggle-on").addClass("fa-toggle-off");
     $("div.input.toggle-onoff input:hidden[value=1]").parent("div").children("i.fa").removeClass("fa-toggle-off").addClass("fa-toggle-on");
-  } else {
-    $("div.input.toggle-onoff input:hidden").parent("div").children("i.fa").removeClass("fa-toggle-off").addClass("fa-toggle-on");
-    $("div.input.toggle-onoff input:hidden[value=0]").parent("div").children("i.fa").removeClass("fa-toggle-on").addClass("fa-toggle-off");
-  }  
+  //} else {
+  //  $("div.input.toggle-onoff input:hidden").parent("div").children("i.fa").removeClass("fa-toggle-off").addClass("fa-toggle-on");
+  //  $("div.input.toggle-onoff input:hidden[value=0]").parent("div").children("i.fa").removeClass("fa-toggle-on").addClass("fa-toggle-off");
+  //}  
 }
 
 $("div.input.toggle-onoff").click(function() {
