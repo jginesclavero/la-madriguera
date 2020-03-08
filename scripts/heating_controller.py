@@ -18,8 +18,8 @@ class HeatingController:
     self.temperature_ = 0.0
     self.update_target_temp(18)
     self.state_ = States.PSYDUCK
-    self.user = "USERNAME"
-    self.password = "PASSWORD"
+    self.user = "raspberry"
+    self.password = "s8F9$fMmbrNs"
 
   def callback(self, data):
     self.temperature_ = data.data
@@ -38,10 +38,13 @@ class HeatingController:
     try:
       url = 'http://la-madriguera-iot.herokuapp.com/heating-system/getStatus'
       resp = requests.get(url=url)
-      data = resp.json()
-      self.update_target_temp(data[0]['temp'])
-      if data[0]['status'] == 1:
-        return True
+      if resp.text:
+        data = resp.json()
+        self.update_target_temp(data[0]['temp'])
+        if data[0]['status'] == 1:
+          return True
+        else:
+          return False
       else:
         return False
     except requests.exceptions.ConnectionError, e:
